@@ -5,3 +5,7 @@ Texas Hold 'Em
 
 Using Kotlin
 
+## Thoughts etc.
+
+A lot of repetition in `getSinglePair`, `getTwoPairs` and `getThreeOfAKind`...
+
