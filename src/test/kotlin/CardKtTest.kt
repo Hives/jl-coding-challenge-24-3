@@ -1,6 +1,7 @@
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class CardKtTest {
     @Test
@@ -16,4 +17,24 @@ internal class CardKtTest {
         assertThat(card.suit).isEqualTo(DIAMONDS)
         assertThat(card.value).isEqualTo(3)
     }
+
+    @Test
+    fun `can create numbered hearts card`() {
+        val card = Card.fromString("4H")
+        assertThat(card.suit).isEqualTo(HEARTS)
+        assertThat(card.value).isEqualTo(4)
+    }
+
+    @Test
+    fun `can create numbered clubs card`() {
+        val card = Card.fromString("5C")
+        assertThat(card.suit).isEqualTo(CLUBS)
+        assertThat(card.value).isEqualTo(5)
+    }
+
+    @Test
+    fun `throws error if suit does not exist`() {
+        assertThrows<Exception> { Card.fromString("6X") }
+    }
+
 }

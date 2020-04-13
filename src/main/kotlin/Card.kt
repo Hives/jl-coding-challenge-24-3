@@ -15,6 +15,8 @@ sealed class Suit {
         fun fromChar(char: Char) = when (char) {
             'S' -> SPADES
             'D' -> DIAMONDS
+            'H' -> HEARTS
+            'C' -> CLUBS
             else -> throw Exception("Could not create suit from '${char}'")
         }
     }
