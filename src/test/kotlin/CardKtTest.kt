@@ -102,9 +102,9 @@ internal class CardKtTest {
     fun `can convert a string representing multiple cards to a set of Cards`() {
         assertThat("2D 6H 10S JD QC KH AC".toCards()).isEqualTo(
             listOf(
-                Card(Number(2), DIAMONDS),
-                Card(Number(6), HEARTS),
-                Card(Number(10), SPADES),
+                Card(Spots(2), DIAMONDS),
+                Card(Spots(6), HEARTS),
+                Card(Spots(10), SPADES),
                 Card(JACK, DIAMONDS),
                 Card(QUEEN, CLUBS),
                 Card(KING, HEARTS),

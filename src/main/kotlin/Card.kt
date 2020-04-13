@@ -38,12 +38,12 @@ sealed class Face {
             "Q" -> QUEEN
             "K" -> KING
             "A" -> ACE
-            else -> Number(str.toInt())
+            else -> Spots(str.toInt())
         }
     }
 }
 
-data class Number(override val value: Int) : Face()
+data class Spots(override val value: Int) : Face()
 
 sealed class Picture(override val value: Int) : Face()
 object JACK : Picture(11)

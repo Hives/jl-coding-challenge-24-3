@@ -1,11 +1,8 @@
-fun List<Card>.getFlush(): List<Card>? = this
-    .asSequence()
-    .groupBy { it.suit }.map { it.value }
-    .filter { it.size >= 5 }
-    .map { cards ->
-        cards.sortedBy { it.value }.takeLast(5)
-    }
-    .firstOrNull()
+package Hands
+
+import ACE
+import Card
+import LOW_ACE
 
 fun List<Card>.getStraight(): List<Card>? = this
     .duplicateHighAcesToLowAces()
