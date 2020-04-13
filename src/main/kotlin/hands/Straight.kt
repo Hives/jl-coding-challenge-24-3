@@ -4,7 +4,7 @@ import ACE
 import Card
 import LOW_ACE
 
-fun List<Card>.getStraight(): List<Card>? = this
+fun List<Card>.getStraight(): Straight? = this
     .duplicateHighAcesToLowAces()
     .removeCardsOfDuplicateValue()
     .sortedByDescending { it.value }
@@ -17,7 +17,7 @@ fun List<Card>.getStraight(): List<Card>? = this
             }
         }
     }.let {
-        if (it.size >= 5) it.take(5) else null
+        if (it.size >= 5) Straight(it.first().face) else null
     }
 
 private fun List<Card>.duplicateHighAcesToLowAces() = this
