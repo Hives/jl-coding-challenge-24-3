@@ -1,6 +1,10 @@
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class CardKtTest {
 
@@ -86,6 +90,21 @@ internal class CardKtTest {
         fun `throws error if number not in range 2-10`() {
             assertThrows<Exception> { Card.fromString("1S") }
         }
+    }
+
+    @Test
+    fun `can convert a string representing multiple cards to a set of Cards`() {
+        assertThat("2D 6H 10S JD QC KH AC".toCards()).isEqualTo(
+            listOf(
+                Card(Number(2), DIAMONDS),
+                Card(Number(6), HEARTS),
+                Card(Number(10), SPADES),
+                Card(JACK, DIAMONDS),
+                Card(QUEEN, CLUBS),
+                Card(KING, HEARTS),
+                Card(ACE, CLUBS)
+            )
+        )
     }
 
 }

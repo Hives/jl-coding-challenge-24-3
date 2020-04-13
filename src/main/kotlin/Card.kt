@@ -1,3 +1,5 @@
+fun String.toCards() = this.split(" ").map { Card.fromString(it) }
+
 data class Card(val face: Face, val suit: Suit) {
     val value = face.value
 
