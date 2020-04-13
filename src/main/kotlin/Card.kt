@@ -31,14 +31,20 @@ sealed class Face {
     abstract val value: Int
 
     companion object {
-        fun fromString(str: String) = Number(str.toInt())
+        fun fromString(str: String) = when(str) {
+            "J" -> JACK
+            "Q" -> QUEEN
+            "K" -> KING
+            "A" -> ACE
+            else -> Number(str.toInt())
+        }
     }
 }
 
-data class Number(val spots: Int) : Face() {
-    override val value = spots
-}
+data class Number(override val value: Int) : Face()
 
-data class Picture(val picture: Char) : Face() {
-    override val value = 0
-}
+sealed class Picture(override val value: Int) : Face()
+object JACK : Picture(11)
+object QUEEN : Picture(12)
+object KING : Picture(13)
+object ACE : Picture(14)
