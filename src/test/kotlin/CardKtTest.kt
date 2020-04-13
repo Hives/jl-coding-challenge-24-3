@@ -86,6 +86,12 @@ internal class CardKtTest {
         }
 
         @Test
+        fun `can represent a low ace`() {
+            val card = Card(LOW_ACE, CLUBS)
+            assertThat(card.value).isEqualTo(1)
+        }
+
+        @Test
         @Disabled
         fun `throws error if number not in range 2-10`() {
             assertThrows<Exception> { Card.fromString("1S") }
