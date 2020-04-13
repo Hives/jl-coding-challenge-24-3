@@ -1,6 +1,8 @@
-fun getFlush(cards: List<Card>): List<Card>? =
-    if (cards.count { it.suit == HEARTS } == 5) {
-        cards.filter { it.suit == HEARTS }
-    } else {
-        null
+fun List<Card>.getFlush(): List<Card>? = this
+    .asSequence()
+    .groupBy { it.suit }.map { it.value }
+    .filter { it.size >= 5 }
+    .map { cards ->
+        cards.sortedBy { it.value }.takeLast(5)
     }
+    .firstOrNull()
