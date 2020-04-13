@@ -1,0 +1,1 @@
+fun getFlush(cards: List<Card>) = Unit
