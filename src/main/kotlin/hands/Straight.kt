@@ -1,4 +1,4 @@
-package Hands
+package hands
 
 import ACE
 import Card

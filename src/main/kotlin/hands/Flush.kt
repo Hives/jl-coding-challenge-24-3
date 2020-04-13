@@ -1,4 +1,4 @@
-package Hands
+package hands
 
 import Card
 
@@ -9,4 +9,4 @@ fun List<Card>.getFlush(): List<Card>? = this
     .map { cards ->
         cards.sortedBy { it.value }.takeLast(5)
     }
-    .firstOrNull()
+    .singleOrNull()
