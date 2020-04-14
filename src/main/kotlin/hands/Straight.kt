@@ -11,13 +11,13 @@ fun List<Card>.getStraight(): Straight? = this
     .let {
         it.drop(1).fold(listOf(it.first())) { acc, card ->
             when {
+                acc.size == 5 -> acc
                 card.value == acc.last().value - 1 -> acc + card
-                acc.size >= 5 -> acc
                 else -> listOf(card)
             }
         }
-    }.let {
-        if (it.size >= 5) Straight(it.first().face) else null
+    }.let { acc ->
+        if (acc.size >= 5) Straight(acc) else null
     }
 
 private fun List<Card>.duplicateHighAcesToLowAces() = this
