@@ -2,19 +2,20 @@ package hands
 
 import Card
 
-fun List<Card>.getThreeOfAKind(): ThreeOfAKind? {
-    val threes = this
+fun List<Card>.getFourOfAKind(): FourOfAKind? {
+    val fours = this
         .asSequence()
         .groupBy { it.face }
         .map { it.value }
-        .filter { it.size == 3 }
+        .filter { it.size == 4 }
         .sortedByDescending {
             it.first().value
         }
 
-    return if (threes.size == 0) {
+    return if (fours.size == 0) {
         null
     } else {
-        ThreeOfAKind(threes.first())
+        FourOfAKind(fours.first())
     }
+
 }
