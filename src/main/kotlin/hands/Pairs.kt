@@ -14,7 +14,7 @@ fun List<Card>.getPairs(): Hand? {
 
     return when (pairs.size) {
         0 -> null
-        1 -> SinglePair(pairs.single())
+        1 -> Pair(pairs.single())
         else -> TwoPairs(pairs[0], pairs[1])
     }
 }

@@ -1,12 +1,6 @@
 package hands
 
-import ACE
-import CLUBS
 import Card
-import DIAMONDS
-import HEARTS
-import KING
-import Spots
 import assertk.assertThat
 import assertk.assertions.containsOnly
 import assertk.assertions.isNull
@@ -16,47 +10,43 @@ import toCards
 internal class FlushKtTest {
     @Test
     fun `returns null if no flush exists`() {
-        assertThat(
-            "2D 3D 4D 5D 6S 7S 8S".toCards().getFlush()
-        ).isNull()
+        val hand = "2D 3D 4D 5D 6S 7S 8S".toCards().getFlush()
+        assertThat(hand).isNull()
     }
 
     @Test
     fun `returns a flush of hearts`() {
-        assertThat(
-            "2D 3D 4H 5H 6H 7H 8H".toCards().getFlush()!!
-        ).containsOnly(
-            Card(Spots(4), HEARTS),
-            Card(Spots(5), HEARTS),
-            Card(Spots(6), HEARTS),
-            Card(Spots(7), HEARTS),
-            Card(Spots(8), HEARTS)
+        val hand = "2D 3D 4H 6H 8H 10H QH".toCards().getFlush()!!
+        assertThat(hand.cards).containsOnly(
+            Card.fromString("4H"),
+            Card.fromString("6H"),
+            Card.fromString("8H"),
+            Card.fromString("10H"),
+            Card.fromString("QH")
         )
     }
 
     @Test
     fun `returns a flush of diamonds`() {
-        assertThat(
-            "2D 3D 4H 5H 6D 7D 8D".toCards().getFlush()!!
-        ).containsOnly(
-            Card(Spots(2), DIAMONDS),
-            Card(Spots(3), DIAMONDS),
-            Card(Spots(6), DIAMONDS),
-            Card(Spots(7), DIAMONDS),
-            Card(Spots(8), DIAMONDS)
+        val hand = "2D 3D 4H 5H 6D 7D 8D".toCards().getFlush()!!
+        assertThat(hand.cards).containsOnly(
+            Card.fromString("2D"),
+            Card.fromString("3D"),
+            Card.fromString("6D"),
+            Card.fromString("7D"),
+            Card.fromString("8D")
         )
     }
 
     @Test
     fun `if more than five cards of a suit it returns the best flush`() {
-        assertThat(
-            "2C 3C 4C 5C 6C KC AC".toCards().getFlush()!!
-        ).containsOnly(
-            Card(Spots(4), CLUBS),
-            Card(Spots(5), CLUBS),
-            Card(Spots(6), CLUBS),
-            Card(KING, CLUBS),
-            Card(ACE, CLUBS)
+        val hand = "AC 2C 3C 5C 6C 7C KC".toCards().getFlush()!!
+        assertThat(hand.cards).containsOnly(
+            Card.fromString("5C"),
+            Card.fromString("6C"),
+            Card.fromString("7C"),
+            Card.fromString("KC"),
+            Card.fromString("AC")
         )
     }
 }
