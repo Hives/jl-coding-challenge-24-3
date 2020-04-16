@@ -3,14 +3,7 @@ package hands
 import Card
 
 fun List<Card>.getPairs(): Hand? {
-    val pairs = this
-        .asSequence()
-        .groupBy { it.face }
-        .map { it.value }
-        .filter { it.size == 2 }
-        .sortedByDescending {
-            it.first().value
-        }
+    val pairs = this.getGroupsOfSize(2)
 
     return when (pairs.size) {
         0 -> null

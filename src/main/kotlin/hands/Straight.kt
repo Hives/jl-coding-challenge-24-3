@@ -20,14 +20,8 @@ fun List<Card>.getStraight(): Straight? = this
         if (acc.size >= 5) Straight(acc) else null
     }
 
-private fun List<Card>.duplicateHighAcesToLowAces() = this
-    .flatMap {
-        if (it.face == ACE) {
-            listOf(it, Card(LOW_ACE, it.suit))
-        } else {
-            listOf(it)
-        }
-    }
+private fun List<Card>.duplicateHighAcesToLowAces() =
+    this + this.filter { it.face == ACE }.map { Card(LOW_ACE, it.suit) }
 
-private fun List<Card>.removeCardsOfDuplicateValue() = this
-    .distinctBy { it.value }
+private fun List<Card>.removeCardsOfDuplicateValue() =
+    this.distinctBy { it.value }
