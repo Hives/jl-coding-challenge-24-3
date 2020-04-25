@@ -37,3 +37,12 @@ private fun Collection<Card>.duplicateHighAcesToLowAces() =
 
 private fun Collection<Card>.removeCardsOfDuplicateValue() =
     this.distinctBy { it.value }
+
+typealias GetFlushFrom = (Collection<Card>) -> List<Card>?
+fun getFlushFrom(cards: Collection<Card>): List<Card>? =
+    cards.asSequence()
+        .groupBy { it.suit }
+        .map { (suit, cards) -> cards }
+        .singleOrNull { it.size >= 5 }
+        ?.sortedByDescending { it.value }
+        ?.take(5)

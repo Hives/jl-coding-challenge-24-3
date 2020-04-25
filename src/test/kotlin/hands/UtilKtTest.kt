@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 internal class UtilKtTest {
+
     @Nested
     inner class GettingDuplicates {
         @Test
@@ -219,6 +220,88 @@ internal class UtilKtTest {
                 Card.from("7D"),
                 Card.from("8C"), // TODO: we don't actually care which 8 this is
                 Card.from("9H")
+            )
+        }
+    }
+
+    @Nested
+    inner class GettingFlushes {
+        @Test
+        fun `returns null if no flush exists`() {
+            val hand = getFlushFrom(
+                setOf(
+                    Card.from("2D"),
+                    Card.from("3D"),
+                    Card.from("4D"),
+                    Card.from("5D"),
+                    Card.from("6S"),
+                    Card.from("7S"),
+                    Card.from("8S")
+                )
+            )
+            assertThat(hand).isNull()
+        }
+
+        @Test
+        fun `returns a flush of hearts`() {
+            val hand = getFlushFrom(setOf(
+                Card.from("2D"),
+                Card.from("3D"),
+                Card.from("4H"),
+                Card.from("6H"),
+                Card.from("8H"),
+                Card.from("10H"),
+                Card.from("QH")
+            ))!!
+
+            assertThat(hand).containsOnly(
+                Card.from("4H"),
+                Card.from("6H"),
+                Card.from("8H"),
+                Card.from("10H"),
+                Card.from("QH")
+            )
+        }
+
+        @Test
+        fun `returns a flush of diamonds`() {
+            val hand = getFlushFrom(setOf(
+                Card.from("2D"),
+                Card.from("3D"),
+                Card.from("4H"),
+                Card.from("5H"),
+                Card.from("6D"),
+                Card.from("7D"),
+                Card.from("8D")
+            ))!!
+
+            assertThat(hand).containsOnly(
+                Card.from("2D"),
+                Card.from("3D"),
+                Card.from("6D"),
+                Card.from("7D"),
+                Card.from("8D")
+            )
+        }
+
+        @Test
+        fun `if more than five cards of a suit it returns the best flush`() {
+            val hand = getFlushFrom(setOf(
+                Card.from("AC"),
+                Card.from("2C"),
+                Card.from("3C"),
+                Card.from("5C"),
+                Card.from("6C"),
+                Card.from("7C"),
+                Card.from("KC")
+            ))!!
+
+            assertThat(hand).containsOnly(
+                Card.from("5C"),
+                Card.from("6C"),
+                Card.from("7C"),
+                Card.from("KC"),
+                Card.from("AC")
             )
         }
     }
