@@ -1,8 +1,8 @@
 package hands
 
-import Card
+import SevenCards
 
-fun List<Card>.getFullHouse(): FullHouse? {
+fun SevenCards.getFullHouse(): FullHouse? {
     val pairs = this.getGroupsOfSize(2)
     val threes = this.getGroupsOfSize(3)
 

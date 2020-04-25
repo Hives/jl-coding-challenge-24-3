@@ -3,8 +3,9 @@ package hands
 import ACE
 import Card
 import LOW_ACE
+import SevenCards
 
-fun List<Card>.getStraight(): Straight? = this
+fun SevenCards.getStraight(): Straight? = this.cards
     .duplicateHighAcesToLowAces()
     .removeCardsOfDuplicateValue()
     .sortedByDescending { it.value }
@@ -20,8 +21,8 @@ fun List<Card>.getStraight(): Straight? = this
         if (acc.size >= 5) Straight(acc) else null
     }
 
-private fun List<Card>.duplicateHighAcesToLowAces() =
+private fun Collection<Card>.duplicateHighAcesToLowAces() =
     this + this.filter { it.face == ACE }.map { Card(LOW_ACE, it.suit) }
 
-private fun List<Card>.removeCardsOfDuplicateValue() =
+private fun Collection<Card>.removeCardsOfDuplicateValue() =
     this.distinctBy { it.value }

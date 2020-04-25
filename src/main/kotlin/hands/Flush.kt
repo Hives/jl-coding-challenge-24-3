@@ -1,8 +1,8 @@
 package hands
 
-import Card
+import SevenCards
 
-fun List<Card>.getFlush(): Flush? = this
+fun SevenCards.getFlush(): Flush? = this.cards
     .asSequence()
     .groupBy { it.suit }
     .map { it.value }

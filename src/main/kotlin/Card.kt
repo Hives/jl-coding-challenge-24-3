@@ -1,10 +1,8 @@
-fun String.toCards() = this.split(" ").map { Card.fromString(it) }
-
 data class Card(val face: Face, val suit: Suit) {
     val value = face.value
 
     companion object {
-        fun fromString(str: String): Card =
+        fun from(str: String): Card =
             Card(
                 Face.fromString(str.dropLast(1)),
                 Suit.fromChar(str.last())

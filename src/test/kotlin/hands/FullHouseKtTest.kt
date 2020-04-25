@@ -7,32 +7,31 @@ import assertk.assertions.containsOnly
 import assertk.assertions.hasSize
 import assertk.assertions.isNull
 import org.junit.jupiter.api.Test
-import toCards
 
 internal class FullHouseKtTest {
     @Test
     fun `returns null if no full house exists`() {
-        val hand = "2D 3D 4D 5D 7S 8S 9S".toCards().getFullHouse()
+        val hand = SevenCards.from("2D 3D 4D 5D 7S 8S 9S").getFullHouse()
         assertThat(hand).isNull()
     }
 
     @Test
     fun `returns a full house if one exists`() {
-        val hand = "2D 2H 2S 3D 3S JD QD".toCards().getFullHouse()!!
+        val hand = SevenCards.from("2D 2H 2S 3D 3S JD QD").getFullHouse()!!
         assertThat(hand.pair).containsOnly(
-            Card.fromString("3D"),
-            Card.fromString("3S")
+            Card.from("3D"),
+            Card.from("3S")
         )
         assertThat(hand.three).containsOnly(
-            Card.fromString("2D"),
-            Card.fromString("2H"),
-            Card.fromString("2S")
+            Card.from("2D"),
+            Card.from("2H"),
+            Card.from("2S")
         )
     }
 
     @Test
     fun `returns the best possible full house if there are two three-of-a-kinds`() {
-        val hand = "2D 2H 2S 3D 3H 3S QD".toCards().getFullHouse()!!
+        val hand = SevenCards.from("2D 2H 2S 3D 3H 3S QD").getFullHouse()!!
 
         assertThat(hand.pair).hasSize(2)
 
@@ -40,33 +39,33 @@ internal class FullHouseKtTest {
         hand.pair.forEach {
             assertThat(
                 listOf(
-                    Card.fromString("2D"),
-                    Card.fromString("2H"),
-                    Card.fromString("2S")
+                    Card.from("2D"),
+                    Card.from("2H"),
+                    Card.from("2S")
                 )
             ).contains(it)
         }
 
         assertThat(hand.three).containsOnly(
-            Card.fromString("3D"),
-            Card.fromString("3H"),
-            Card.fromString("3S")
+            Card.from("3D"),
+            Card.from("3H"),
+            Card.from("3S")
         )
     }
 
     @Test
     fun `returns the best possible full house if there are two pairs and one three-of-a-kind`() {
-        val hand = "2D 2H 3D 3H 4D 4H 4S".toCards().getFullHouse()!!
+        val hand = SevenCards.from("2D 2H 3D 3H 4D 4H 4S").getFullHouse()!!
 
         assertThat(hand.pair).containsOnly(
-            Card.fromString("3D"),
-            Card.fromString("3H")
+            Card.from("3D"),
+            Card.from("3H")
         )
 
         assertThat(hand.three).containsOnly(
-            Card.fromString("4D"),
-            Card.fromString("4H"),
-            Card.fromString("4S")
+            Card.from("4D"),
+            Card.from("4H"),
+            Card.from("4S")
         )
     }
 

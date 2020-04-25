@@ -1,6 +1,6 @@
 package hands
 
-import Card
+import SevenCards
 
-fun List<Card>.getThreeOfAKind(): ThreeOfAKind? =
+fun SevenCards.getThreeOfAKind(): ThreeOfAKind? =
     this.getGroupsOfSize(3).firstOrNull()?.let { ThreeOfAKind(it) }

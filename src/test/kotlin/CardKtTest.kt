@@ -13,31 +13,31 @@ internal class CardKtTest {
     inner class Suits {
         @Test
         fun `can create spades card`() {
-            val card = Card.fromString("2S")
+            val card = Card.from("2S")
             assertThat(card.suit).isEqualTo(SPADES)
         }
 
         @Test
         fun `can create diamonds card`() {
-            val card = Card.fromString("2D")
+            val card = Card.from("2D")
             assertThat(card.suit).isEqualTo(DIAMONDS)
         }
 
         @Test
         fun `can create hearts card`() {
-            val card = Card.fromString("2H")
+            val card = Card.from("2H")
             assertThat(card.suit).isEqualTo(HEARTS)
         }
 
         @Test
         fun `can create clubs card`() {
-            val card = Card.fromString("2C")
+            val card = Card.from("2C")
             assertThat(card.suit).isEqualTo(CLUBS)
         }
 
         @Test
         fun `throws error if suit does not exist`() {
-            assertThrows<Exception> { Card.fromString("2X") }
+            assertThrows<Exception> { Card.from("2X") }
         }
     }
 
@@ -46,43 +46,43 @@ internal class CardKtTest {
     inner class Values {
         @Test
         fun `can create a 2 card`() {
-            val card = Card.fromString("2C")
+            val card = Card.from("2C")
             assertThat(card.value).isEqualTo(2)
         }
 
         @Test
         fun `can create a 10 card`() {
-            val card = Card.fromString("10D")
+            val card = Card.from("10D")
             assertThat(card.value).isEqualTo(10)
         }
 
         @Test
         fun `Jack has value of 11`() {
-            val card = Card.fromString("JD")
+            val card = Card.from("JD")
             assertThat(card.value).isEqualTo(11)
         }
 
         @Test
         fun `Queen has value of 12`() {
-            val card = Card.fromString("QD")
+            val card = Card.from("QD")
             assertThat(card.value).isEqualTo(12)
         }
 
         @Test
         fun `King has value of 13`() {
-            val card = Card.fromString("KD")
+            val card = Card.from("KD")
             assertThat(card.value).isEqualTo(13)
         }
 
         @Test
         fun `Ace has value of 14`() {
-            val card = Card.fromString("AD")
+            val card = Card.from("AD")
             assertThat(card.value).isEqualTo(14)
         }
 
         @Test
         fun `throws error if unrecognised face`() {
-            assertThrows<Exception> { Card.fromString("XS") }
+            assertThrows<Exception> { Card.from("XS") }
         }
 
         @Test
@@ -94,23 +94,7 @@ internal class CardKtTest {
         @Test
         @Disabled
         fun `throws error if number not in range 2-10`() {
-            assertThrows<Exception> { Card.fromString("1S") }
+            assertThrows<Exception> { Card.from("1S") }
         }
     }
-
-    @Test
-    fun `can convert a string representing multiple cards to a set of Cards`() {
-        assertThat("2D 6H 10S JD QC KH AC".toCards()).isEqualTo(
-            listOf(
-                Card(Spots(2), DIAMONDS),
-                Card(Spots(6), HEARTS),
-                Card(Spots(10), SPADES),
-                Card(JACK, DIAMONDS),
-                Card(QUEEN, CLUBS),
-                Card(KING, HEARTS),
-                Card(ACE, CLUBS)
-            )
-        )
-    }
-
 }

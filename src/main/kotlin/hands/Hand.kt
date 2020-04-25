@@ -4,7 +4,7 @@ import Card
 
 sealed class Hand
 
-// straight flush
+data class StraightFlush(val cards: List<Card>) : Hand()
 data class FourOfAKind(val four: Set<Card>) : Hand()
 data class FullHouse(val three: Set<Card>, val pair: Set<Card>) : Hand()
 data class Flush(val cards: List<Card>) : Hand()

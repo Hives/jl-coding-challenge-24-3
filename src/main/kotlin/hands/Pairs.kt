@@ -1,8 +1,8 @@
 package hands
 
-import Card
+import SevenCards
 
-fun List<Card>.getPairs(): Hand? {
+fun SevenCards.getPairs(): Hand? {
     val pairs = this.getGroupsOfSize(2)
 
     return when (pairs.size) {
