@@ -225,83 +225,36 @@ internal class UtilKtTest {
     }
 
     @Nested
-    inner class GettingFlushes {
+    inner class GettingGroupsOfOneSuit {
         @Test
-        fun `returns null if no flush exists`() {
-            val hand = getFlushFrom(
-                setOf(
-                    Card.from("2D"),
-                    Card.from("3D"),
-                    Card.from("4D"),
-                    Card.from("5D"),
-                    Card.from("6S"),
-                    Card.from("7S"),
-                    Card.from("8S")
-                )
-            )
+        fun `returns null if only four cards of same suit`() {
+            val hand = getAtLeastFiveCardsOfOneSuit(SevenCards.from("2D 3D 4D 5D 6S 7S 8S"))
             assertThat(hand).isNull()
         }
 
         @Test
-        fun `returns a flush of hearts`() {
-            val hand = getFlushFrom(setOf(
+        fun `returns five cards if five cards of same suit`() {
+            val hand = getAtLeastFiveCardsOfOneSuit(SevenCards.from("2D 3D 4D 5D 6D 7S 8S"))!!
+            assertThat(hand).containsOnly(
                 Card.from("2D"),
                 Card.from("3D"),
-                Card.from("4H"),
-                Card.from("6H"),
-                Card.from("8H"),
-                Card.from("10H"),
-                Card.from("QH")
-            ))!!
-
-            assertThat(hand).containsOnly(
-                Card.from("4H"),
-                Card.from("6H"),
-                Card.from("8H"),
-                Card.from("10H"),
-                Card.from("QH")
+                Card.from("4D"),
+                Card.from("5D"),
+                Card.from("6D")
             )
         }
 
         @Test
-        fun `returns a flush of diamonds`() {
-            val hand = getFlushFrom(setOf(
-                Card.from("2D"),
-                Card.from("3D"),
+        fun `returns seven cards if seven cards of same suit`() {
+            val hand = getAtLeastFiveCardsOfOneSuit(SevenCards.from("2H 3H 4H 5H 6H 7H 8H"))!!
+            assertThat(hand).containsOnly(
+                Card.from("2H"),
+                Card.from("3H"),
                 Card.from("4H"),
                 Card.from("5H"),
-                Card.from("6D"),
-                Card.from("7D"),
-                Card.from("8D")
-            ))!!
-
-            assertThat(hand).containsOnly(
-                Card.from("2D"),
-                Card.from("3D"),
-                Card.from("6D"),
-                Card.from("7D"),
-                Card.from("8D")
-            )
-        }
-
-        @Test
-        fun `if more than five cards of a suit it returns the best flush`() {
-            val hand = getFlushFrom(setOf(
-                Card.from("AC"),
-                Card.from("2C"),
-                Card.from("3C"),
-                Card.from("5C"),
-                Card.from("6C"),
-                Card.from("7C"),
-                Card.from("KC")
-            ))!!
-
-            assertThat(hand).containsOnly(
-                Card.from("5C"),
-                Card.from("6C"),
-                Card.from("7C"),
-                Card.from("KC"),
-                Card.from("AC")
+                Card.from("6H"),
+                Card.from("7H"),
+                Card.from("8H")
             )
         }
     }
