@@ -2,9 +2,9 @@ package hands
 
 import SevenCards
 
-fun SevenCards.getFullHouse(): FullHouse? {
-    val pairs = this.getGroupsOfSize(2)
-    val threes = this.getGroupsOfSize(3)
+fun fullHouseOrNull(sevenCards: SevenCards): FullHouse? {
+    val pairs = sevenCards.getGroupsOfSize(2)
+    val threes = sevenCards.getGroupsOfSize(3)
 
     return when {
         threes.size == 1 && pairs.size > 0 -> FullHouse(

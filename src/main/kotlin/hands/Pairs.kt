@@ -2,8 +2,8 @@ package hands
 
 import SevenCards
 
-fun SevenCards.getPairs(): Hand? {
-    val pairs = this.getGroupsOfSize(2)
+fun pairsOrNull(sevenCards: SevenCards): Hand? {
+    val pairs = sevenCards.getGroupsOfSize(2)
 
     return when (pairs.size) {
         0 -> null

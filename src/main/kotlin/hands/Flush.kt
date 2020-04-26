@@ -2,9 +2,10 @@ package hands
 
 import SevenCards
 
-fun SevenCards.getFlush(
+fun flushOrNull(
+    sevenCards: SevenCards,
     getAtLeastFiveCardsOfOneSuit: GetAtLeastFiveCardsOfOneSuit = ::getAtLeastFiveCardsOfOneSuit
 ): Flush? =
-    getAtLeastFiveCardsOfOneSuit(this)
+    getAtLeastFiveCardsOfOneSuit(sevenCards)
         ?.sortedByDescending { it.value }
         ?.let { Flush(it.take(5)) }

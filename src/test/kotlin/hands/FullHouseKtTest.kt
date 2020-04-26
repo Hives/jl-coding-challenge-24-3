@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Test
 internal class FullHouseKtTest {
     @Test
     fun `returns null if no full house exists`() {
-        val hand = SevenCards.from("2D 3D 4D 5D 7S 8S 9S").getFullHouse()
+        val hand = fullHouseOrNull(SevenCards.from("2D 3D 4D 5D 7S 8S 9S"))
         assertThat(hand).isNull()
     }
 
     @Test
     fun `returns a full house if one exists`() {
-        val hand = SevenCards.from("2D 2H 2S 3D 3S JD QD").getFullHouse()!!
+        val hand = fullHouseOrNull(SevenCards.from("2D 2H 2S 3D 3S JD QD"))!!
         assertThat(hand.pair).containsOnly(
             Card.from("3D"),
             Card.from("3S")
@@ -31,7 +31,7 @@ internal class FullHouseKtTest {
 
     @Test
     fun `returns the best possible full house if there are two three-of-a-kinds`() {
-        val hand = SevenCards.from("2D 2H 2S 3D 3H 3S QD").getFullHouse()!!
+        val hand = fullHouseOrNull(SevenCards.from("2D 2H 2S 3D 3H 3S QD"))!!
 
         assertThat(hand.pair).hasSize(2)
 
@@ -55,7 +55,7 @@ internal class FullHouseKtTest {
 
     @Test
     fun `returns the best possible full house if there are two pairs and one three-of-a-kind`() {
-        val hand = SevenCards.from("2D 2H 3D 3H 4D 4H 4S").getFullHouse()!!
+        val hand = fullHouseOrNull(SevenCards.from("2D 2H 3D 3H 4D 4H 4S"))!!
 
         assertThat(hand.pair).containsOnly(
             Card.from("3D"),
