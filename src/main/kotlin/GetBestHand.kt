@@ -2,10 +2,15 @@ import hands.Hand
 import hands.HighestCard
 
 typealias BestHandGetter = (SevenCards) -> Hand
-
 typealias HandDetector = (SevenCards) -> Hand?
+typealias HighestCardGetter = (SevenCards) -> HighestCard
 
-fun createBestHandGetter(handDetectors: List<HandDetector>): BestHandGetter {
+fun createBestHandGetter(
+    handDetectors: List<HandDetector>,
+    getHighestCard: HighestCardGetter
+): BestHandGetter {
     return fun(sevenCards: SevenCards): Hand =
-        sevenCards.cards.sortedByDescending { it.value }.take(5).let { HighestCard(it) }
+        handDetectors.fold(null as Hand?) { handOrNull, nextHandDetector ->
+            handOrNull ?: nextHandDetector(sevenCards)
+        } ?: getHighestCard(sevenCards)
 }

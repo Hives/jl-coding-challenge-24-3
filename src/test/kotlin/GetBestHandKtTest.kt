@@ -1,30 +1,68 @@
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import assertk.assertions.isInstanceOf
+import hands.Hand
 import hands.HighestCard
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
+import io.mockk.verifyOrder
 import org.junit.jupiter.api.Test
 
 internal class GetBestHandKtTest {
     @Test
-    fun `if all hand detectors fail, return highest card, with the five highest cards in descending order`() {
-        val mockHandDetector = mockk<HandDetector>()
-        every { mockHandDetector(any()) } returns null
+    fun `call the hand detectors in order and return the first hand that gets returned`() {
+        val mockSevenCards = mockk<SevenCards>()
 
-        val getBestHand = createBestHandGetter(listOf(mockHandDetector))
-        val sevenCards = SevenCards.from("2D 3C 4S 5H JC QD KS")
-        val hand = getBestHand(sevenCards)
+        val failingHandDetector1 = mockk<HandDetector>()
+        every { failingHandDetector1(any()) } returns null
 
-        assertThat(hand).isInstanceOf(HighestCard::class)
-        assertThat((hand as HighestCard).cards).isEqualTo(
-            listOf(
-                Card.from("KS"),
-                Card.from("QD"),
-                Card.from("JC"),
-                Card.from("5H"),
-                Card.from("4S")
-            )
+        val failingHandDetector2 = mockk<HandDetector>()
+        every { failingHandDetector2(any()) } returns null
+
+        val succesfulHandDetector = mockk<HandDetector>()
+        val mockHand = mockk<Hand>()
+        every { succesfulHandDetector(any()) } returns mockHand
+
+        val uncalledHandDetector = mockk<HandDetector>()
+
+        val getBestHand = createBestHandGetter(
+            handDetectors = listOf(
+                failingHandDetector1,
+                failingHandDetector2,
+                succesfulHandDetector,
+                uncalledHandDetector
+            ),
+            getHighestCard = mockk()
         )
+        val hand = getBestHand(mockSevenCards)
+
+        verifyOrder {
+            failingHandDetector1(mockSevenCards)
+            failingHandDetector2(mockSevenCards)
+            succesfulHandDetector(mockSevenCards)
+        }
+        verify(exactly = 0) { uncalledHandDetector(any()) }
+
+        assertThat(hand).isEqualTo(mockHand)
+    }
+
+    @Test
+    fun `If all hand detectors return null, return 'highest card' hand`() {
+        val mockSevenCards = mockk<SevenCards>()
+
+        val failingHandDetector = mockk<HandDetector>()
+        every { failingHandDetector(any()) } returns null
+
+        val mockHighestCardGetter = mockk<HighestCardGetter>()
+        val mockHighestCard = mockk<HighestCard>()
+        every { mockHighestCardGetter(mockSevenCards) } returns mockHighestCard
+
+        val getBestHand = createBestHandGetter(
+            handDetectors = listOf(failingHandDetector),
+            getHighestCard = mockHighestCardGetter
+        )
+        val hand = getBestHand(mockSevenCards)
+
+        assertThat(hand).isEqualTo(mockHighestCard)
     }
 }
