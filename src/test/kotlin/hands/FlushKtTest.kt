@@ -18,7 +18,8 @@ internal class FlushKtTest {
         val mockGetAtLeastFiveCardsOfOneSuit = mockk<GetAtLeastFiveCardsOfOneSuit>()
         every { mockGetAtLeastFiveCardsOfOneSuit(any()) } returns null
 
-        val hand = flushOrNull(mockSevenCards, mockGetAtLeastFiveCardsOfOneSuit)
+        val flushOrNull = createFlushOrNull(mockGetAtLeastFiveCardsOfOneSuit)
+        val hand = flushOrNull(mockSevenCards)
         assertThat(hand).isNull()
     }
 
@@ -36,7 +37,8 @@ internal class FlushKtTest {
         )
         every { mockGetAtLeastFiveCardsOfOneSuit(any()) } returns fiveHearts
 
-        val hand = flushOrNull(mockSevenCards, mockGetAtLeastFiveCardsOfOneSuit)!!
+        val flushOrNull = createFlushOrNull(mockGetAtLeastFiveCardsOfOneSuit)
+        val hand = flushOrNull(mockSevenCards)!!
         assertThat(hand).isInstanceOf(Flush::class)
         assertThat(hand.cards).containsOnly(
             Card.from("2H"),
@@ -63,7 +65,8 @@ internal class FlushKtTest {
         )
         every { mockGetAtLeastFiveCardsOfOneSuit(any()) } returns sevenHearts
 
-        val hand = flushOrNull(mockSevenCards, mockGetAtLeastFiveCardsOfOneSuit)!!
+        val flushOrNull = createFlushOrNull(mockGetAtLeastFiveCardsOfOneSuit)
+        val hand = flushOrNull(mockSevenCards)!!
         assertThat(hand.cards).containsOnly(
             Card.from("4H"),
             Card.from("5H"),
@@ -87,7 +90,8 @@ internal class FlushKtTest {
         )
         every { mockGetAtLeastFiveCardsOfOneSuit(any()) } returns fiveHearts
 
-        val hand = flushOrNull(mockSevenCards, mockGetAtLeastFiveCardsOfOneSuit)!!
+        val flushOrNull = createFlushOrNull(mockGetAtLeastFiveCardsOfOneSuit)
+        val hand = flushOrNull(mockSevenCards)!!
         assertThat(hand.cards.sortedByDescending { it.value }).isEqualTo(hand.cards)
     }
 }

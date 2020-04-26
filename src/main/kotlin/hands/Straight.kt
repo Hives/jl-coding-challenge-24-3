@@ -2,5 +2,7 @@ package hands
 
 import SevenCards
 
-fun straightOrNull(sevenCards: SevenCards, getStraightFrom: GetStraightFrom = ::getStraightFrom): Straight? =
-    getStraightFrom(sevenCards.cards)?.let { Straight(it) }
+fun createStraightOrNull(getStraightFrom: GetStraightFrom): (SevenCards) -> Straight? {
+    return fun (sevenCards: SevenCards): Straight? =
+        getStraightFrom(sevenCards.cards)?.let { Straight(it) }
+}

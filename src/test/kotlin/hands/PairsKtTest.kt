@@ -16,7 +16,7 @@ internal class PairsKtTest {
 
     @Test
     fun `it should return a pair if there is one pair`() {
-        val hand = pairsOrNull(SevenCards.from("2D 3D 4D 5D 6S 6D 8S")) as Pair
+        val hand = pairsOrNull(SevenCards.from("2D 3D 4D 5D 6S 6D 8S")) as SinglePair
         assertThat(hand.pair).containsOnly(Card.from("6S"), Card.from("6D"))
     }
 

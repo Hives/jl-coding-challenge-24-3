@@ -9,7 +9,7 @@ internal class HighestCardKtTest {
     @Test
     fun `Returns a hand of 'highest card' with the five highest cards in descending order`() {
         val sevenCards = SevenCards.from("2D 3C 4S 5H JC QD KS")
-        val hand = sevenCards.getHighestCard()
+        val hand = highestCard(sevenCards)
 
         assertThat(hand).isInstanceOf(HighestCard::class)
         assertThat(hand.cards).isEqualTo(

@@ -20,7 +20,8 @@ internal class StraightKtTest {
         val mockGetStraightFrom = mockk<GetStraightFrom>()
         every { mockGetStraightFrom(any()) } returns null
 
-        val hand = straightOrNull(mockSevenCards, mockGetStraightFrom)
+        val straightOrNull = createStraightOrNull(mockGetStraightFrom)
+        val hand = straightOrNull(mockSevenCards)
         assertThat(hand).isNull()
     }
 
@@ -33,7 +34,8 @@ internal class StraightKtTest {
         val mockGetStraightFrom = mockk<GetStraightFrom>()
         every { mockGetStraightFrom(any()) } returns mockStraight
 
-        val hand = straightOrNull(mockSevenCards, mockGetStraightFrom)!!
+        val straightOrNull = createStraightOrNull(mockGetStraightFrom)
+        val hand = straightOrNull(mockSevenCards)!!
         assertThat(hand).isInstanceOf(Straight::class)
         assertThat(hand.cards).isEqualTo(mockStraight)
     }

@@ -7,7 +7,7 @@ fun pairsOrNull(sevenCards: SevenCards): Hand? {
 
     return when (pairs.size) {
         0 -> null
-        1 -> Pair(pairs.single())
+        1 -> SinglePair(pairs.single())
         else -> TwoPairs(pairs[0], pairs[1])
     }
 }

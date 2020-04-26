@@ -68,5 +68,4 @@ internal class FullHouseKtTest {
             Card.from("4S")
         )
     }
-
 }

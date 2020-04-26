@@ -18,7 +18,11 @@ internal class StraightFlushKtTest {
         val mockGetAtLeastFiveCardsOfOneSuit = mockk<GetAtLeastFiveCardsOfOneSuit>()
         every { mockGetAtLeastFiveCardsOfOneSuit(mockSevenCards) } returns null
 
-        val hand = straightFlushOrNull(mockSevenCards, mockGetAtLeastFiveCardsOfOneSuit, mockk())
+        val straightFlushOrNull = createStraightFlushOrNull(
+            getAtLeastFiveCardsOfOneSuit = mockGetAtLeastFiveCardsOfOneSuit,
+            getStraightFrom = mockk()
+        )
+        val hand = straightFlushOrNull(mockSevenCards)
         assertThat(hand).isNull()
     }
 
@@ -33,7 +37,11 @@ internal class StraightFlushKtTest {
         val mockGetStraightFrom = mockk<GetStraightFrom>()
         every { mockGetStraightFrom(mockCardsOfSameSuit) } returns null
 
-        val hand = straightFlushOrNull(mockSevenCards, mockGetAtLeastFiveCardsOfOneSuit, mockGetStraightFrom)
+        val straightFlushOrNull = createStraightFlushOrNull(
+            getAtLeastFiveCardsOfOneSuit = mockGetAtLeastFiveCardsOfOneSuit,
+            getStraightFrom = mockGetStraightFrom
+        )
+        val hand = straightFlushOrNull(mockSevenCards)
         assertThat(hand).isNull()
     }
 
@@ -49,7 +57,11 @@ internal class StraightFlushKtTest {
         val mockStraight = mockk<List<Card>>()
         every { mockGetStraightFrom(mockCardsOfSameSuit) } returns mockStraight
 
-        val hand = straightFlushOrNull(mockSevenCards, mockGetAtLeastFiveCardsOfOneSuit, mockGetStraightFrom)!!
+        val straightFlushOrNull = createStraightFlushOrNull(
+            getAtLeastFiveCardsOfOneSuit = mockGetAtLeastFiveCardsOfOneSuit,
+            getStraightFrom = mockGetStraightFrom
+        )
+        val hand = straightFlushOrNull(mockSevenCards)!!
         assertThat(hand).isInstanceOf(StraightFlush::class)
         assertThat(hand.cards).isEqualTo(mockStraight)
     }

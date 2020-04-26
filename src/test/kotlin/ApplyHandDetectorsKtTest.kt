@@ -8,7 +8,7 @@ import io.mockk.verify
 import io.mockk.verifyOrder
 import org.junit.jupiter.api.Test
 
-internal class GetBestHandKtTest {
+internal class ApplyHandDetectorsKtTest {
     @Test
     fun `call the hand detectors in order and return the first hand that gets returned`() {
         val mockSevenCards = mockk<SevenCards>()
@@ -25,7 +25,7 @@ internal class GetBestHandKtTest {
 
         val uncalledHandDetector = mockk<HandDetector>()
 
-        val getBestHand = createBestHandGetter(
+        val getBestHand = createHandDetectorApplier(
             handDetectors = listOf(
                 failingHandDetector1,
                 failingHandDetector2,
@@ -57,7 +57,7 @@ internal class GetBestHandKtTest {
         val mockHighestCard = mockk<HighestCard>()
         every { mockHighestCardGetter(mockSevenCards) } returns mockHighestCard
 
-        val getBestHand = createBestHandGetter(
+        val getBestHand = createHandDetectorApplier(
             handDetectors = listOf(failingHandDetector),
             getHighestCard = mockHighestCardGetter
         )

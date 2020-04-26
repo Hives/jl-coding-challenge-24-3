@@ -1,16 +1,35 @@
 import hands.Hand
-import hands.HighestCard
+import hands.createFlushOrNull
+import hands.createStraightFlushOrNull
+import hands.createStraightOrNull
+import hands.fourOfAKindOrNull
+import hands.fullHouseOrNull
+import hands.getAtLeastFiveCardsOfOneSuit
+import hands.getStraightFrom
+import hands.highestCard
+import hands.pairsOrNull
+import hands.threeOfAKindOrNull
 
-typealias BestHandGetter = (SevenCards) -> Hand
-typealias HandDetector = (SevenCards) -> Hand?
-typealias HighestCardGetter = (SevenCards) -> HighestCard
+fun getBestHand(sevenCards: SevenCards): Hand {
+    val straightOrNull = createStraightOrNull(::getStraightFrom)
+    val flushOrNull = createFlushOrNull(::getAtLeastFiveCardsOfOneSuit)
+    val straightFlushOrNull = createStraightFlushOrNull(
+        ::getAtLeastFiveCardsOfOneSuit,
+        ::getStraightFrom
+    )
 
-fun createBestHandGetter(
-    handDetectors: List<HandDetector>,
-    getHighestCard: HighestCardGetter
-): BestHandGetter {
-    return fun(sevenCards: SevenCards): Hand =
-        handDetectors.fold(null as Hand?) { handOrNull, nextHandDetector ->
-            handOrNull ?: nextHandDetector(sevenCards)
-        } ?: getHighestCard(sevenCards)
+    val applyHandDetectors = createHandDetectorApplier(
+        handDetectors = listOf(
+            straightFlushOrNull,
+            ::fourOfAKindOrNull,
+            ::fullHouseOrNull,
+            flushOrNull,
+            straightOrNull,
+            ::threeOfAKindOrNull,
+            ::pairsOrNull
+        ),
+        getHighestCard = ::highestCard
+    )
+
+    return applyHandDetectors(sevenCards)
 }
